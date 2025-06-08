@@ -7,7 +7,6 @@ from loguru import logger
 ENV_RQ_USERNAME = "RQ_USERNAME"
 ENV_RQ_PASSWD = "RQ_PASSWD"
 ENV_JFBYM_TOKEN = "JFBYM_TOKEN"
-ENV_SYNC_RQ = "SYNC_RQ"
 
 
 class RQ(object):
@@ -108,7 +107,6 @@ class RQ(object):
             "GET", self._verify_url, headers=self._headers, data={}
         )
         image = base64.b64encode(response.content).decode()
-        logger.info(f"get verify image headers: {response.headers}")
 
         code = self._recognized_code(image)
 

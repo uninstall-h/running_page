@@ -11,12 +11,11 @@ import eviltransform
 import gpxpy
 import polyline
 import requests
-from config import GPX_FOLDER, JSON_FILE, SQL_FILE, run_map, start_point
+from config import GPX_FOLDER, JSON_FILE, SQL_FILE, run_map, start_point, ENV_SYNC_RQ
 from Crypto.Cipher import AES
 from generator import Generator
 from utils import adjust_time
 import xml.etree.ElementTree as ET
-from sync_to_rq import ENV_SYNC_RQ
 
 KEEP_SPORT_TYPES = ["running", "hiking", "cycling"]
 KEEP2STRAVA = {

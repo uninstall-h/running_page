@@ -59,3 +59,6 @@ STRAVA_GARMIN_TYPE_DICT = {
     "Walk": "walking",
     "Swim": "swimming",
 }
+
+# ENV
+ENV_SYNC_RQ = "SYNC_RQ"
