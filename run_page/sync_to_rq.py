@@ -78,7 +78,7 @@ class RQ(object):
         try:
             data = response.json()
             if data["status"] == 0:
-                logger.info(f"login success")
+                logger.info("login success")
                 return True
             else:
                 logger.error(f"login error, data: {data}")
