@@ -72,7 +72,9 @@ class RQ(object):
         logger.info("开始登录。。。")
 
         payload = f"username={self._user_name}&password={self._passwd}&login_code={code}&remember=1"
-        response = self._session.request("POST", self._login_url, headers=self._headers, data=payload)
+        response = self._session.request(
+            "POST", self._login_url, headers=self._headers, data=payload
+        )
         try:
             data = response.json()
             if data["status"] == 0:
@@ -125,9 +127,9 @@ class RQ(object):
         ).json()
 
         try:
-            data = response['data']['data']
+            data = response["data"]["data"]
             logger.info(f"验证码: {data}")
-            return response['data']['data']
+            return data
         except Exception as e:
             logger.error(f"验证码获取失败: {e}, {response}")
             return None
@@ -139,9 +141,7 @@ class RQ(object):
 
         with open(path, "rb") as f:
             filename = path.split("/")[-1]
-            files = [
-                ("file", (filename, f, "application/octet-stream"))
-            ]
+            files = [("file", (filename, f, "application/octet-stream"))]
 
         response = self._session.request(
             "POST", self._upload_url, headers=self._headers, data={}, files=files
