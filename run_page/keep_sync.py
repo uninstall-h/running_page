@@ -16,6 +16,7 @@ from Crypto.Cipher import AES
 from generator import Generator
 from utils import adjust_time
 import xml.etree.ElementTree as ET
+from sync_to_rq import ENV_SYNC_RQ
 
 KEEP_SPORT_TYPES = ["running", "hiking", "cycling"]
 KEEP2STRAVA = {
@@ -321,6 +322,11 @@ def download_keep_gpx(gpx_data, keep_id):
         file_path = os.path.join(GPX_FOLDER, str(keep_id) + ".gpx")
         with open(file_path, "w") as fb:
             fb.write(gpx_data)
+        if os.getenv(ENV_SYNC_RQ) == "True":
+            from sync_to_rq import rq_instance
+            # todo upload
+            rq_instance.get_user_info()
+
         return file_path
     except Exception as e:
         print(f"Something wrong to download keep gpx {str(e)}")
