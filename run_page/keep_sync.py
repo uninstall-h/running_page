@@ -322,6 +322,8 @@ def download_keep_gpx(gpx_data, keep_id):
         file_path = os.path.join(GPX_FOLDER, str(keep_id) + ".gpx")
         with open(file_path, "w") as fb:
             fb.write(gpx_data)
+
+        # upload to rq
         if os.getenv(ENV_SYNC_RQ) == "True":
             from sync_to_rq import rq_instance
             # todo upload
