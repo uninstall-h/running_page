@@ -19,21 +19,21 @@ class RQ(object):
     _check_base_url = "https://www.rq.run/dc/api?_=User/Training/condition"
 
     _headers = {
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Accept-Language': 'zh-CN,zh;q=0.9',
-        'Connection': 'keep-alive',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Origin': 'https://www.rq.run',
-        'Referer': 'https://www.rq.run/Home/Login/login.html?refer_url=%2Fuser%2Fupload%3Flang%3Dzh-CN%26pure%3D1',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-origin',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
-        'X-Requested-With': 'XMLHttpRequest',
-        'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"macOS"',
-        'sec-gpc': '1',
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Language": "zh-CN,zh;q=0.9",
+        "Connection": "keep-alive",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Origin": "https://www.rq.run",
+        "Referer": "https://www.rq.run/Home/Login/login.html?refer_url=%2Fuser%2Fupload%3Flang%3Dzh-CN%26pure%3D1",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"macOS"',
+        "sec-gpc": "1",
     }
 
     def __new__(cls, *args, **kw):
@@ -102,7 +102,9 @@ class RQ(object):
             logger.exception(f"get user_info error, {e}")
 
     def _get_verify_code(self):
-        response = self._session.request("GET", self._verify_url, headers=self._headers, data={})
+        response = self._session.request(
+            "GET", self._verify_url, headers=self._headers, data={}
+        )
         image = base64.b64encode(response.content).decode()
         logger.info(f"get verify image headers: {response.headers}")
 
@@ -118,7 +120,9 @@ class RQ(object):
             "image": image,
         }
 
-        response = requests.request("POST", url, headers={"Content-Type": "application/json"}, json=data).json()
+        response = requests.request(
+            "POST", url, headers={"Content-Type": "application/json"}, json=data
+        ).json()
 
         try:
             data = response['data']['data']
@@ -134,11 +138,14 @@ class RQ(object):
             return
 
         with open(path, "rb") as f:
+            filename = path.split("/")[-1]
             files = [
-                ('file', ('9223370287639252907.gpx', f, 'application/octet-stream'))
+                ("file", (filename, f, "application/octet-stream"))
             ]
 
-        response = self._session.request("POST", self._upload_url, headers=self._headers, data={}, files=files)
+        response = self._session.request(
+            "POST", self._upload_url, headers=self._headers, data={}, files=files
+        )
         try:
             data = response.json()
             logger.info(data)

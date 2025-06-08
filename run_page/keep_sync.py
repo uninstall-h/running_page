@@ -326,6 +326,7 @@ def download_keep_gpx(gpx_data, keep_id):
         # upload to rq
         if os.getenv(ENV_SYNC_RQ) == "True":
             from sync_to_rq import rq_instance
+
             # todo upload
             rq_instance.get_user_info()
 
