@@ -141,18 +141,18 @@ class RQ(object):
             filename = path.split("/")[-1]
             files = [("file", (filename, f, "application/octet-stream"))]
 
-        response = self._session.request(
-            "POST", self._upload_url, headers=self._headers, data={}, files=files
-        )
-        try:
-            data = response.json()
-            logger.info(data)
-            if data["status"] != 0:
-                logger.error(f"upload gpx<{path}>, error")
-            else:
-                logger.info(f"upload gpx<{path}> success")
-        except Exception as e:
-            logger.error(f"上传GPX<{path}>失败: {e}, {response.text}")
+            response = self._session.request(
+                "POST", self._upload_url, headers=self._headers, data={}, files=files
+            )
+            try:
+                data = response.json()
+                logger.info(data)
+                if data["status"] != 0:
+                    logger.error(f"upload gpx<{path}>, error")
+                else:
+                    logger.info(f"upload gpx<{path}> success")
+            except Exception as e:
+                logger.error(f"上传GPX<{path}>失败: {e}, {response.text}")
 
 
 rq_instance = RQ()
